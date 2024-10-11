@@ -1,5 +1,5 @@
 # StudentVoice (backend)
-Реализация бэкенда на FastAPI + SQLAlchemy
+Реализация бэкенда на FastAPI + SQLAlchemy via alembic
 
 ## Установка
 1. Клонировать репозиторий

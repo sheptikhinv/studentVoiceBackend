@@ -3,7 +3,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select
 
-DATABASE_URL = "sqlite+aiosqlite:///database.db"
+from helpers import ConfigHelper
+
+# DATABASE_URL = "sqlite+aiosqlite:///database.db"
+DATABASE_URL = ConfigHelper.get_value("DATABASE_URL")
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 Base = declarative_base()

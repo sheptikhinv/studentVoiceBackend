@@ -4,8 +4,8 @@ from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 
+from helpers import ConfigHelper
 from ..database import models, get_session
-from .config_helper import ConfigHelper
 from ..exceptions import credentials_exception
 
 security = HTTPBearer(auto_error=False)

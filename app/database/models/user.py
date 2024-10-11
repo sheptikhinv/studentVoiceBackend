@@ -16,7 +16,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(index=True, unique=True)
-    password: Mapped[str] = mapped_column()
+    password: Mapped[str] = mapped_column(nullable=False)
     role: Mapped[Role] = mapped_column(SqlAlchemyEnum(Role), default=Role.PROFESSOR)
     is_active: Mapped[bool] = mapped_column(default=True)
 
