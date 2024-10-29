@@ -43,7 +43,7 @@ class TokenManager:
         :param session: Database session.
         :return: User object.
         """
-        from . import UserService
+        from ..services import UserService
 
         if not credentials:
             raise credentials_exception
