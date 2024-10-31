@@ -19,9 +19,12 @@ class UserCreated(UserCreation):
     password: str
 
 
+class UserView(UserCreation):
+    id: int
+
+
 class User(UserBase):
     id: int
-    password: str
 
     class Config:
         orm_mode = True

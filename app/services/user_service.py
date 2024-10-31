@@ -28,3 +28,8 @@ class UserService:
     async def get_user_by_username(cls, session: AsyncSession, username: str) -> User | None:
         result = await session.execute(select(User).where(func.lower(User.username) == username.lower()))
         return result.scalar_one_or_none()
+
+    @classmethod
+    async def get_all_users(cls, session: AsyncSession) -> list[User]:
+        result = await session.execute(select(User))
+        return result.scalars().all()
