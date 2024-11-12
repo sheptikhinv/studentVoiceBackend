@@ -7,19 +7,19 @@ class UserBase(BaseModel):
     username: str
 
 
-class UserLogin(UserBase):
+class UserLoginInput(UserBase):
     password: str
 
 
-class UserCreation(UserBase):
+class UserCreationInput(UserBase):
     role: Role
 
 
-class UserCreated(UserCreation):
+class UserCreationOutput(UserCreationInput):
     password: str
 
 
-class UserView(UserCreation):
+class UserViewOutput(UserCreationInput):
     id: int
 
 

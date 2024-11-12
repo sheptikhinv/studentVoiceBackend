@@ -1,1 +1,1 @@
-from .user import Token, UserLogin, UserCreation, UserCreated, UserView
+from .user import Token, UserLoginInput, UserCreationInput, UserCreationOutput, UserViewOutput
