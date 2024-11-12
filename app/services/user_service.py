@@ -15,8 +15,8 @@ class UserService:
         if await cls.get_user_by_username(session, user.username) is not None:
             raise username_already_taken_exception
 
-        if user.role == Role.PROFESSOR and user.institute_id is None or await InstituteService.get_institute_by_id(
-                session, user.institute_id) is None:
+        if user.role == Role.PROFESSOR and user.institute_id is None or not await InstituteService.check_if_institute_exists(
+                session, user.institute_id):
             raise professor_without_institute_exception
 
         password = PasswordManager.get_random_password()
