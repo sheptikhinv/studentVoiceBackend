@@ -1,3 +1,4 @@
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -27,19 +28,20 @@ async def init_db() -> None:
     Creates new database if not exists and prints admin credentials
     :return:
     """
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    async with async_session() as session:
-        from ..database import User, Role
-        from ..helpers import PasswordManager
+    try:
+        async with async_session() as session:
+            from ..database import User, Role
+            from ..helpers import PasswordManager
 
-        admin_user = await session.execute(
-            select(User).where(User.username == "admin")
-        )
-        admin_user = admin_user.scalar_one_or_none()
-        if not admin_user:
-            password = PasswordManager.get_random_password()
-            admin_user = User(username="admin", password=PasswordManager.get_password_hash(password), role=Role.ADMIN)
-            print(f"Your admin credentials\nUsername: admin\nPassword: {password}")
-            session.add(admin_user)
-            await session.commit()
+            admin_user = await session.execute(
+                select(User).where(User.username == "admin")
+            )
+            admin_user = admin_user.scalar_one_or_none()
+            if not admin_user:
+                password = PasswordManager.get_random_password()
+                admin_user = User(username="admin", password=PasswordManager.get_password_hash(password), role=Role.ADMIN)
+                print(f"Your admin credentials\nUsername: admin\nPassword: {password}")
+                session.add(admin_user)
+                await session.commit()
+    except OperationalError:
+        raise Exception("Couldn't connect to database, check if you ran all migrations")
