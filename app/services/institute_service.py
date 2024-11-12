@@ -18,6 +18,11 @@ class InstituteService:
                                        short_name=institute.short_name, address=institute.address)
 
     @classmethod
+    async def get_institute_by_id(cls, session: AsyncSession, institute_id: int) -> Institute | None:
+        result = await session.execute(select(Institute).where(Institute.id == institute_id))
+        return result.scalar_one_or_none()
+
+    @classmethod
     async def get_all_institutes(cls, session: AsyncSession) -> List[Institute]:
         result = await session.execute(select(Institute))
         return result.scalars().all()

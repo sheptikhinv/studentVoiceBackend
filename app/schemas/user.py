@@ -13,7 +13,7 @@ class UserLoginInput(UserBase):
 
 class UserCreationInput(UserBase):
     role: Role
-    institute_id: int | None
+    institute_id: int | None = None
 
 
 class UserCreationOutput(UserCreationInput):
