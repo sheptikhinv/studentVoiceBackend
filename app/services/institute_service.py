@@ -10,13 +10,12 @@ from ..schemas import InstituteCreationInput, InstituteCreationOutput
 
 class InstituteService:
     @classmethod
-    async def add_institute(cls, session: AsyncSession, institute: InstituteCreationInput) -> InstituteCreationOutput:
+    async def add_institute(cls, session: AsyncSession, institute: InstituteCreationInput) -> Institute:
         new_institute = Institute(full_name=institute.full_name, short_name=institute.short_name,
                                   address=institute.address)
         session.add(new_institute)
         await session.commit()
-        return InstituteCreationOutput(id=new_institute.id, full_name=institute.full_name,
-                                       short_name=institute.short_name, address=institute.address)
+        return new_institute
 
     @classmethod
     async def check_if_institute_exists(cls, session: AsyncSession, institute_id: int) -> bool:
