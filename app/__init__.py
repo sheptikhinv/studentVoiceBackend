@@ -1,2 +1,2 @@
 from .main import start_server
-from .database import User, Institute, Base
+from .database import User, Institute, Base, Subject

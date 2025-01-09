@@ -1,7 +1,7 @@
 import enum
 
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from sqlalchemy import Enum as SqlAlchemyEnum, ForeignKey
+from sqlalchemy import Enum as SqlAlchemyEnum, ForeignKey, Column, Integer, Table
 
 from ..database import Base
 
@@ -9,6 +9,13 @@ from ..database import Base
 class Role(enum.Enum):
     PROFESSOR = 1
     ADMIN = 2
+
+
+subject_professor_association = Table(
+    'subject_professor_association', Base.metadata,
+    Column('subject_id', Integer, ForeignKey('subjects.id')),
+    Column('professor_id', Integer, ForeignKey('users.id'))
+)
 
 
 class User(Base):
@@ -22,6 +29,8 @@ class User(Base):
 
     institute_id: Mapped[int] = mapped_column(ForeignKey("institutes.id"), nullable=True)
     institute = relationship("Institute", back_populates="users")
+
+    subjects = relationship("Subject", secondary=subject_professor_association, back_populates="professors")
 
     def __repr__(self):
         return f"<User(id='{self.id}')>"
